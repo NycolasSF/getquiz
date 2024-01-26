@@ -1,0 +1,30 @@
+{
+  "perguntas": [
+    {
+      "pergunta": "O que é uma estrutura de dados?",
+      "letraA": "Uma maneira de organizar e armazenar dados para que possam ser usados eficientemente.",
+      "letrab": "Uma linguagem de programação usada para criar aplicativos da web.",
+      "resposta": "a"
+    },
+    {
+      "pergunta": "O que é um array?",
+      "letraA": "Contém uma coleção de elementos, cada um identificado por um índice. ",
+      "letrab": "Uma maneira de organizar e armazenar dados para que possam ser usados eficientemente. (certo)",
+      "resposta": "b"
+    }
+    ,
+    {
+      "pergunta": "O que é uma lista ligada? ",
+      "letraA": "Consiste em uma sequência de nós, cada um contendo dados e um link para o próximo nó na sequência. ",
+      "letrab": "Armazena elementos em uma matriz bidimensional.",
+      "resposta": "a"
+    },
+    {
+      "pergunta": "Pergunta diferente da primeira",
+      "letraA": "Uma pergunta curta ",
+      "letrab": "Uma pergunta curta 2",
+      "resposta": "a"
+    }
+  ]
+}
+  

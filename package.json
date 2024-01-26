@@ -1,0 +1,28 @@
+{
+  "name": "game-multiplayer-coffe-in-sugar",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "dependencies": {
+    "express": "^4.17.1",
+    "socket.io": "^2.3.0"
+  },
+  "devDependencies": {
+    "@flydotio/node-demo": "^0.2.1"
+  },
+  "scripts": {
+    "test": "nodemon server.js",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NycolasSF/game-multiplayer-coffe-in-sugar.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/NycolasSF/game-multiplayer-coffe-in-sugar/issues"
+  },
+  "homepage": "https://github.com/NycolasSF/game-multiplayer-coffe-in-sugar#readme"
+}

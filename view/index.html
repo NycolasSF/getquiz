@@ -1,0 +1,101 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="shortcut icon" href="./assets/favicon.png" type="image/png">
+        <title>Coffe with sugar</title>
+        <link rel="stylesheet" href="./style.css">
+        <script src="/socket.io/socket.io.js"></script>
+    </head>
+    <body>
+        <div id="start" class="container-start">
+            <h2>Coffe with sugar</h2>
+            <form>
+                <input type="text" id="apelido" placeholder="Digite seu Nick"/>
+                <button onclick="emitStartGame()" type="button">Start</button>
+            </form>
+        </div>
+        <section id="game" class="container-game">
+            <h2>Coffe with sugar</h2>
+            <div class="content-screenRender">
+                <canvas id="screenRender" width="640" height="260">
+                    Canvas requires a browser that supports HTML5.
+                </canvas>
+                <div class="table">
+                    <table id="points" class="table-points"></table>
+                </div>
+            </div>
+        </section>
+    </body>
+    <script src="./GameObjects.js"></script>
+    <script src="./ObjectsSetup.js"></script>
+    <script src="./GameSetup.js"></script>
+    <script > 
+        const socket = io();
+        const game = GameSetup('screenRender');
+
+        function emitStartGame(){
+            let playerName = document.getElementById('apelido').value != '' ? 
+            document.getElementById('apelido').value : alert('Empty coffee');
+            
+            if(playerName != undefined){
+                return socket.emit('start-game', playerName);
+            }
+            
+        }
+
+        socket.on('add-player', ({getGame, idPlayer})=>{
+            
+            game.setPlayer(idPlayer);
+            game.start(getGame);
+
+            // ? START DETECT COLLISION
+            setInterval(() => {
+                let detectCollision = game.playerCheckCollision(idPlayer);
+                if (detectCollision.collision) return socket.emit('player-collision', detectCollision);
+            }, 100);
+
+            document.getElementById('start').style.display = 'none'; 
+            document.getElementById('game').style.display = 'block'; 
+        
+        });
+
+        //  ? PLAYERs
+        socket.on('new-player', ({player}) => {
+            game.addPlayer(player)             
+        });
+
+        socket.on('remove-player', (idPlayer)=>{
+            game.removePlayer(idPlayer);
+        });
+
+        socket.on('player-update', (player)=>{
+            game.movePlayer(player);
+        }); 
+        socket.on('player-colided', (obj)=>{
+            console.log(`Type: ${obj.type}`);
+            
+            game.playerColided(obj);
+        });
+
+
+
+        // ? PERGUNTAS
+        socket.on('add-sugar', (sugar) => {
+            game.addSugar(sugar);
+            console.log(sugar)
+        });
+        
+    
+        
+
+        document.addEventListener("keydown", emitKeybordListen);
+        
+        function emitKeybordListen(e){  
+            if(e.key != undefined && e.key === 'ArrowUp' || e.key === 'ArrowLeft' || e.key == 'ArrowRight'){
+                socket.emit('key-listen', { id: game.getPlayer(), key: e.key });
+            }
+        }
+
+    </script>
+</html>
