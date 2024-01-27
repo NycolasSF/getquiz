@@ -96,12 +96,10 @@ module.exports = class CreateConfig {
                 y: 24
             },
             timeSugar: this.timeSugars,
-            data:{
-                pergunta: question.pergunta,
-                resposta: question.resposta,
-                letraA: question.letraA,
-                letraB: question.letraB
-            }
+            pergunta: question.pergunta,
+            resposta: question.resposta,
+            letraA: question.letraA,
+            letraB: question.letraB
         }
         
         

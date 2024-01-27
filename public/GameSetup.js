@@ -122,8 +122,12 @@ function GameSetup(canvasId) { // create and loop in gmae
     }
 
     function playerColided({colidedIdPlayer, colidedIdSugar}){
+        let acerto = document.getElementById('check');
+
         gamePlayers[colidedIdPlayer].score += 1;
+        acerto.style.display='block'
         removeSugar(colidedIdSugar);
+        setTimeout(()=>{acerto.style.display="none"},500)
     }
 
     function playersScore() {
@@ -159,11 +163,21 @@ function GameSetup(canvasId) { // create and loop in gmae
 
     // ? OBJ --> PERGUNTA
     function addSugar(sugar) {
+        let pergunta = document.getElementById('pergunta');
+        let letraA = document.getElementById('letraA');
+        let letraB = document.getElementById('letraB');
+
+
         console.log(`QTD SUGAR: ${gameSugars.length} `);
+
+        pergunta.innerText += sugar.pergunta
+        letraA.innerText += sugar.letraA
+        letraB.innerText += sugar.letraB
         
         if(sugar.id && gameSugars.length <= 2){
             gameSugars.push(new Sugar(sugar, canvasId))
         }
+
     }
 
     function addSugars(objectsSugars) {

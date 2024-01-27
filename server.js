@@ -81,4 +81,4 @@ io.on("connection", (socket)=> {
   });
 });
 
-server.listen(port, () => console.log(`Connected in port 3001`));
+server.listen(port, () => console.log(`Connected in port ${port}`));

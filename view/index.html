@@ -9,7 +9,7 @@
     </head>
     <body>
         <div id="start" class="container-start">
-            <h2>Coffe with sugar</h2>
+            <h2>getQuiz</h2>
             <form>
                 <input type="text" id="apelido" placeholder="Digite seu Nick"/>
                 <button onclick="emitStartGame()" type="button">Start</button>
@@ -17,7 +17,11 @@
         </div>
         <section id="game" class="container-game">
             <h2>Coffe with sugar</h2>
+            <p id="pergunta">Pergunta: </p>
+            <p id="letraA">(a)</p>
+            <p id="letraB">(b)</p>
             <div class="content-screenRender">
+                <div id="acerto">ACERTOUUUU!!</div>
                 <canvas id="screenRender" width="640" height="260">
                     Canvas requires a browser that supports HTML5.
                 </canvas>
@@ -83,7 +87,7 @@
         // ? PERGUNTAS
         socket.on('add-sugar', (sugar) => {
             game.addSugar(sugar);
-            console.log(sugar)
+            //console.log(sugar)
         });
         
     
