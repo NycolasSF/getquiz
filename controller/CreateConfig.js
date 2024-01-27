@@ -16,11 +16,11 @@ module.exports = class CreateConfig {
             score: 0,
             position: {
                 x: Math.ceil(Math.random() * 600),
-                y: 230
+                y: 210
             },
             tam: {
-                x: 30,
-                y: 30
+                x: 50,
+                y: 50
             }
         }             
     
@@ -36,12 +36,11 @@ module.exports = class CreateConfig {
         const movedTamY = 20;// ! view GameSetup.js movePlayer
 
         if (key === 'ArrowUp') {
-            if(player.position.y > 210){
+            if(player.position.y > 200){
 
                 player.position.y -= movedTamY;
                 setTimeout(() => {
                     player.position.y += movedTamY;
-                    
                 }, 100);
                 
                 return {
@@ -83,7 +82,21 @@ module.exports = class CreateConfig {
     }
 
     // ? PERGUNTAS
-    addSugar(numberRandom,question) {
+    addPergunta(question) {
+
+        let dados = {
+            pergunta: question.pergunta,
+            resposta: question.resposta,
+            letraA: question.letraA,
+            letraB: question.letraB
+        }
+        console.log(`ADD pergunta ${dados}`);
+        this.gameSugars.push(dados);
+
+        return dados;
+    }
+
+    addSugar(numberRandom,tagQuestion) {
 
         let dados = {
             id: `${Math.ceil(Math.random() * 2048)}`,
@@ -92,14 +105,11 @@ module.exports = class CreateConfig {
                 y: 0
             },
             tam: {
-                x: 24,
-                y: 24
+                x: 22,
+                y: 22
             },
             timeSugar: this.timeSugars,
-            pergunta: question.pergunta,
-            resposta: question.resposta,
-            letraA: question.letraA,
-            letraB: question.letraB
+            tag: tagQuestion
         }
         
         
@@ -119,7 +129,7 @@ module.exports = class CreateConfig {
         }
     }
 
-    addSugarRandom(pergunta){
+    addSugarRandom(tag){
         if (this.gameSugars.length <= 2){            
 
             let numberRandom = Math.ceil(Math.random() * 700);
@@ -132,17 +142,17 @@ module.exports = class CreateConfig {
                             
                             let newRandom = Math.ceil(Math.random() * (numberRandom + sugar.tam.x));
                             console.log(`New Sugar \n New Random ${newRandom}`);
-                            return this.addSugar(newRandom,pergunta);
+                            return this.addSugar(newRandom,tag);
                         
                         }else{
 
-                            return this.addSugar(numberRandom,pergunta);
+                            return this.addSugar(numberRandom,tag);
 
                         }
 
                 });
             }else{
-                return this.addSugar(numberRandom,pergunta);
+                return this.addSugar(numberRandom,tag);
             }
         }
         //console.log(`Hit max sugars`);

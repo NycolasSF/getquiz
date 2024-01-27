@@ -40,7 +40,7 @@ function GameSetup(canvasId) { // create and loop in gmae
             
         gameSugars.forEach((sugar) => {
             sugar.update(time);
-            sugar.draw();
+            sugar.draw(sugar.tag);
         });
 
         window.requestAnimationFrame((timeStamp) => gameLoop(timeStamp));
@@ -122,12 +122,14 @@ function GameSetup(canvasId) { // create and loop in gmae
     }
 
     function playerColided({colidedIdPlayer, colidedIdSugar}){
-        let acerto = document.getElementById('check');
+        console.log(`COLISAO`);
+
+        let acerto = document.getElementById('acerto');
 
         gamePlayers[colidedIdPlayer].score += 1;
         acerto.style.display='block'
         removeSugar(colidedIdSugar);
-        setTimeout(()=>{acerto.style.display="none"},500)
+        setTimeout(()=>{acerto.style.display="none"},1000)
     }
 
     function playersScore() {
@@ -137,8 +139,8 @@ function GameSetup(canvasId) { // create and loop in gmae
 
         points.innerHTML = `
             <tr>
-                <th>Players</th>
-                <th>Points</th>
+                <th>Alunoos</th>
+                <th>Pontos</th>
             </tr>
         `
 
@@ -162,24 +164,27 @@ function GameSetup(canvasId) { // create and loop in gmae
     }
 
     // ? OBJ --> PERGUNTA
-    function addSugar(sugar) {
+    function addPergunta(perguntaPlayer) {
         let pergunta = document.getElementById('pergunta');
         let letraA = document.getElementById('letraA');
         let letraB = document.getElementById('letraB');
 
+        console.log(`Pergunta ALL:`, perguntaPlayer);
 
+        pergunta.innerText += perguntaPlayer.pergunta
+        letraA.innerText += perguntaPlayer.letraA
+        letraB.innerText += perguntaPlayer.letraB
+
+    }
+
+    function addSugar(sugar) {
         console.log(`QTD SUGAR: ${gameSugars.length} `);
-
-        pergunta.innerText += sugar.pergunta
-        letraA.innerText += sugar.letraA
-        letraB.innerText += sugar.letraB
         
         if(sugar.id && gameSugars.length <= 2){
             gameSugars.push(new Sugar(sugar, canvasId))
         }
-
     }
-
+    
     function addSugars(objectsSugars) {
         if(objectsSugars){
             for (const idSugar in objectsSugars) {
@@ -215,6 +220,7 @@ function GameSetup(canvasId) { // create and loop in gmae
         playerColided,
         movePlayer,
         addSugar,
+        addPergunta,
         addSugars,
         removeSugar,
         clearCanvas

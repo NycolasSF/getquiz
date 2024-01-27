@@ -33,11 +33,8 @@ class SugarObject {
         this.height = sugar.tam.y;
         this.timeSugar = sugar.timeSugar
         
-        this.pergunta = sugar.pergunta
-        this.responta = sugar.responta
-        this.letraA = sugar.letraA
-        this.letraB = sugar.letraB
-        
+        this.tag = sugar.tag
+
         this.context = null;
         this.screen = {};
 

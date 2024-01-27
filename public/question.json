@@ -8,23 +8,57 @@
     },
     {
       "pergunta": "O que é um array?",
-      "letraA": "Contém uma coleção de elementos, cada um identificado por um índice. ",
+      "letraA": "Contém uma coleção de elementos, cada um identificado por um índice.",
       "letraB": "Uma maneira de organizar e armazenar dados para que possam ser usados eficientemente. (certo)",
       "resposta": "b"
-    }
-    ,
+    },
     {
-      "pergunta": "O que é uma lista ligada? ",
-      "letraA": "Consiste em uma sequência de nós, cada um contendo dados e um link para o próximo nó na sequência. ",
+      "pergunta": "O que é uma lista ligada?",
+      "letraA": "Consiste em uma sequência de nós, cada um contendo dados e um link para o próximo nó na sequência.",
       "letraB": "Armazena elementos em uma matriz bidimensional.",
       "resposta": "a"
     },
     {
-      "pergunta": "Pergunta diferente da primeira",
-      "letraA": "Uma pergunta curta ",
-      "letraB": "Uma pergunta curta 2",
+      "pergunta": "Em Pilhas, o princípio fundamental se baseia em _______.",
+      "letraA": "LIFO",
+      "letraB": "FIFO",
       "resposta": "a"
+    },
+    {
+      "pergunta": "Em Filas, o princípio fundamental se baseia em _______.",
+      "letraA": "LIFO",
+      "letraB": "FIFO",
+      "resposta": "b"
+    },
+    {
+      "pergunta": "Na Árvore Binária, os dados são não lineares e tem um nó raiz e cada nó tem no máximo _____ filhos.",
+      "letraA": "Cinco",
+      "letraB": "Dois",
+      "resposta": "b"
+    },
+    {
+      "pergunta": "A árvore AVL é uma árvore ______ auto-balanceada.",
+      "letraA": "Binária",
+      "letraB": "Ordem 4",
+      "resposta": "a"
+    },
+    {
+      "pergunta": "Heap binário é uma árvore binária completa que satisfaz a propriedade de heap, seguindo a ______ de cada nó inserido.",
+      "letraA": "Prioridade",
+      "letraB": "Compatibilidade",
+      "resposta": "a"
+    },
+    {
+      "pergunta": "Grafo direcionado _______ arestas têm uma direção associada.",
+      "letraA": "Não possui",
+      "letraB": "Possui",
+      "resposta": "b"
+    },
+    {
+      "pergunta": "O algoritmo de Busca em Profundidade (DFS) percorre um grafo e explora todos os _______, antes de retroceder.",
+      "letraA": "Nós do mesmo nível",
+      "letraB": "Nós filhos",
+      "resposta": "b"
     }
   ]
 }
-  

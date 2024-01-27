@@ -15,7 +15,9 @@ app.get("/", (req, res)=> {
 });
 
 const game = new CreateConfig();
-const questions = require('./public/question.json')
+const questions = require('./public/question.json');
+
+let numberPergunta = 0;
 
 io.on("connection", (socket)=> {
   console.log("Player connected :", socket.id);
@@ -33,10 +35,12 @@ io.on("connection", (socket)=> {
       idPlayer: socket.id
     });  
 
-    // ? PERGUNTAS random
+    // ? PERGUNTAS
+
     //criar perguntas randons
-    io.emit('add-sugar', game.addSugarRandom(questions.perguntas[0]));
-    io.emit('add-sugar', game.addSugarRandom(questions.perguntas[1]));
+    io.emit('pergunta', game.addPergunta(questions.perguntas[numberPergunta]))
+    io.emit('add-sugar', game.addSugarRandom("a"));
+    io.emit('add-sugar', game.addSugarRandom("b"));
 
     //  ? Emit new player
     socket.broadcast.emit('new-player', { player: game.gamePlayers[socket.id]});
@@ -54,6 +58,7 @@ io.on("connection", (socket)=> {
     console.log(`Player colided ${idPlayer} with ${idSugar}`);
     
     game.updateScorePlayer(idPlayer);
+    //numberPergunta = numberPergunta < questions.perguntas.length ? numberPergunta++ : 0; 
     game.removeSugar(idSugar);
 
     socket.emit('player-colided', { colidedIdPlayer: idPlayer, colidedIdSugar: idSugar});

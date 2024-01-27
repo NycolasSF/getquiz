@@ -3,7 +3,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="shortcut icon" href="./assets/favicon.png" type="image/png">
-        <title>Coffe with sugar</title>
+        <title>getQuiz</title>
         <link rel="stylesheet" href="./style.css">
         <script src="/socket.io/socket.io.js"></script>
     </head>
@@ -11,17 +11,19 @@
         <div id="start" class="container-start">
             <h2>getQuiz</h2>
             <form>
-                <input type="text" id="apelido" placeholder="Digite seu Nick"/>
+                <input type="text" id="apelido" placeholder="Digite seu Nome"/>
                 <button onclick="emitStartGame()" type="button">Start</button>
             </form>
         </div>
         <section id="game" class="container-game">
             <h2>Coffe with sugar</h2>
-            <p id="pergunta">Pergunta: </p>
-            <p id="letraA">(a)</p>
-            <p id="letraB">(b)</p>
-            <div class="content-screenRender">
+            <div id="container-pergunta">
+                <p id="pergunta">Pergunta: </p>
+                <p id="letraA">(a)</p>
+                <p id="letraB">(b)</p>
                 <div id="acerto">ACERTOUUUU!!</div>
+            </div>
+            <div class="content-screenRender">
                 <canvas id="screenRender" width="640" height="260">
                     Canvas requires a browser that supports HTML5.
                 </canvas>
@@ -31,6 +33,7 @@
             </div>
         </section>
     </body>
+    <!-- <div>© <a href='https://www.123rf.com/profile_captainvector'>captainvector</a>, <a href='https://www.123rf.com/free-images/'>123RF Free Images</a></div> -->
     <script src="./GameObjects.js"></script>
     <script src="./ObjectsSetup.js"></script>
     <script src="./GameSetup.js"></script>
@@ -40,7 +43,7 @@
 
         function emitStartGame(){
             let playerName = document.getElementById('apelido').value != '' ? 
-            document.getElementById('apelido').value : alert('Empty coffee');
+            document.getElementById('apelido').value : alert('Digite seu nome');
             
             if(playerName != undefined){
                 return socket.emit('start-game', playerName);
@@ -77,22 +80,21 @@
             game.movePlayer(player);
         }); 
         socket.on('player-colided', (obj)=>{
-            console.log(`Type: ${obj.type}`);
+            console.log(`Type:`, obj);
             
             game.playerColided(obj);
         });
 
-
-
         // ? PERGUNTAS
+        socket.on('pergunta', (pergunta)=>{
+            game.addPergunta(pergunta)
+        })
+
         socket.on('add-sugar', (sugar) => {
             game.addSugar(sugar);
             //console.log(sugar)
-        });
+        });      
         
-    
-        
-
         document.addEventListener("keydown", emitKeybordListen);
         
         function emitKeybordListen(e){  
