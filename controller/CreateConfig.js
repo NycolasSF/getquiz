@@ -3,6 +3,7 @@ module.exports = class CreateConfig {
     constructor(){
         this.gamePlayers = {}
         this.gameSugars = [];
+        this.gamePerguntas = {};
         this.timeSugars = 1;
     }
     
@@ -33,7 +34,7 @@ module.exports = class CreateConfig {
     movePlayer(id, key) {
         let player  = this.gamePlayers[id];
         const movedTamX = 10; // ! view GameSetup.js playerCheckCollision
-        const movedTamY = 20;// ! view GameSetup.js movePlayer
+        const movedTamY = 20;// ! view GameSetup.js movePlayer 
 
         if (key === 'ArrowUp') {
             if(player.position.y > 200){
@@ -90,14 +91,15 @@ module.exports = class CreateConfig {
             letraA: question.letraA,
             letraB: question.letraB
         }
-        console.log(`ADD pergunta ${dados}`);
-        this.gameSugars.push(dados);
+        console.log(`ADD pergunta`);
+
+        this.gamePerguntas = dados;
 
         return dados;
     }
 
     addSugar(numberRandom,tagQuestion) {
-
+        console.log(`ADD TagQuestion+`);
         let dados = {
             id: `${Math.ceil(Math.random() * 2048)}`,
             position: {
@@ -115,17 +117,22 @@ module.exports = class CreateConfig {
         
         this.timeSugars === 1 ? this.timeSugars = 0.25 : this.timeSugars += 0.25;
         
-        console.log(`QTD Sugar: ${this.gameSugars.length}`);
+        console.log(`QTD alternativa: ${this.gameSugars.length}`);
         this.gameSugars.push(dados);
         
         return dados;
     }
 
     removeSugar(idSugar){
-        console.log(`SUGAR REMOVED: ${idSugar} `);
+        console.log(`alternativa REMOVED: ${idSugar} `);
         if (idSugar) {
             let find = this.gameSugars.findIndex(element => element.id === idSugar);
             this.gameSugars.splice(find, 1);            
+        }
+    }
+    removeAlternativas(){
+        while(this.gameSugars.length) {
+            this.gameSugars.pop();
         }
     }
 
@@ -141,7 +148,7 @@ module.exports = class CreateConfig {
                         sugar.position.x + sugar.tam.x > numberRandom) {
                             
                             let newRandom = Math.ceil(Math.random() * (numberRandom + sugar.tam.x));
-                            console.log(`New Sugar \n New Random ${newRandom}`);
+                            console.log(`\n Nova Alternativa ${newRandom}`);
                             return this.addSugar(newRandom,tag);
                         
                         }else{
@@ -155,7 +162,6 @@ module.exports = class CreateConfig {
                 return this.addSugar(numberRandom,tag);
             }
         }
-        //console.log(`Hit max sugars`);
         
         return false;
     }

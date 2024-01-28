@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Roboto&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&display=swap');
 *{
     margin: 0;
     padding: 0;
@@ -7,6 +8,7 @@
 body{
      /*max-width: 1366px;*/
     position: relative;
+    background-color: #f7f7f7;
 }
 body h1, body h2, body h3{
     font-family: 'Press Start 2P', cursive;
@@ -21,7 +23,7 @@ body p{
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background: URL('./assets/coffee-pixels.png') no-repeat;
+    background: URL('./assets/background-screen.png') no-repeat;
     background-size: cover;
 }
 .container-start h2{
@@ -72,12 +74,40 @@ body p{
     align-items: flex-start;
 }
 
+.container-pergunta{
+    padding: 20px;
+    margin: 50px;
+    background-color: black;
+    border-style: double;
+    border-width: 4px;
+    border-color: #b38964;
+
+}
+.container-pergunta p {
+    font-family: "Pixelify Sans", sans-serif;
+    font-size: 16px;
+    color: #dcdcdc;
+}
+
+.letraA, .letraB, .titlePergunta{
+    font-weight: bolder;
+    font-size: 18px;
+}
+.container-pergunta .letraA{
+    color: #7de9de;
+}
+.container-pergunta .letraB{
+    color: #e9917d;
+}
+
+
 #screenRender{
     display: block;
     margin: 0 auto;
     width: 80%;
-    background-color: #fff;
-    border: 2px solid #dcdcdc;
+    background-image: url("./assets/background.png");
+    background-size: cover;
+    background-repeat: no-repeat;    border: 2px solid #dcdcdc;
     image-rendering: pixelated;
     image-rendering: crisp-edges;
     image-rendering: -moz-crisp-edges;
@@ -88,12 +118,15 @@ body p{
     border: 2px solid #333333;  
     border-collapse: collapse;
     width: 20%;
+    font-size: 14px;
+
 }
 .table-points td{
     border: 1px solid #333333;  
 }
 .table-points th{
     font-family: 'Press Start 2P', cursive;
+    font-size: 12px;
     padding: 10px;
     text-align: center;
     background: #e1f4f3;
@@ -104,6 +137,18 @@ body p{
     text-align: center;
 }
 
-#acerto{
+#acerto, #erro {
+    font-family: 'Press Start 2P', cursive;
+    padding: 20px 50px;
+    font-size: 26px;
+    font-weight: bold;
     display: none;
+}
+#acerto{
+    font-size: 26px;
+    color: green
+}
+#erro{
+    font-size: 26px;
+    color: yellow
 }

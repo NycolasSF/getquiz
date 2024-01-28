@@ -2,7 +2,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="shortcut icon" href="./assets/favicon.png" type="image/png">
+        <link rel="shortcut icon" href="./assets/favicon-96x96.png" type="image/png">
         <title>getQuiz</title>
         <link rel="stylesheet" href="./style.css">
         <script src="/socket.io/socket.io.js"></script>
@@ -16,12 +16,15 @@
             </form>
         </div>
         <section id="game" class="container-game">
-            <h2>Coffe with sugar</h2>
-            <div id="container-pergunta">
-                <p id="pergunta">Pergunta: </p>
-                <p id="letraA">(a)</p>
-                <p id="letraB">(b)</p>
+            <h2>getQuiz</h2>
+            <div class="container-pergunta">
+                
+                <p style="margin-bottom: 10px;"><span class="titlePergunta">Pergunta: </span><span id="pergunta"></span> </p>
+
+                <p> <span class="letraA">(A)</span>  <span id="letraA"></span></p>
+                <p ><span class="letraB">(B)</span> <span id="letraB"></span> </p>
                 <div id="acerto">ACERTOUUUU!!</div>
+                <div id="erro">Tenta denovo ai!!</div>
             </div>
             <div class="content-screenRender">
                 <canvas id="screenRender" width="640" height="260">
@@ -69,7 +72,7 @@
 
         //  ? PLAYERs
         socket.on('new-player', ({player}) => {
-            game.addPlayer(player)             
+            game.addPlayer(player)    
         });
 
         socket.on('remove-player', (idPlayer)=>{
@@ -94,7 +97,7 @@
             game.addSugar(sugar);
             //console.log(sugar)
         });      
-        
+
         document.addEventListener("keydown", emitKeybordListen);
         
         function emitKeybordListen(e){  

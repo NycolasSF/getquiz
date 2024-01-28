@@ -55,7 +55,6 @@ class Sugar extends SugarObject {
             else
                 img.src = './assets/letra-b-draw.png';
         
-        
         let moveX = this.screenInfinite(this.screen.w, Math.round(this.posX));
         this.context.drawImage(img, moveX, Math.round(this.posY))
     }

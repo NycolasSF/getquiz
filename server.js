@@ -27,22 +27,22 @@ io.on("connection", (socket)=> {
 
     game.addPlayer(namePlayer, socket.id);
 
+    
     socket.emit('add-player', { 
       getGame: {
         player: game.gamePlayers,
-        sugar: game.gameSugars
+        sugar: game.gameSugars,
+        pergunta: game.gamePerguntas
       }, 
       idPlayer: socket.id
     });  
 
     // ? PERGUNTAS
+      io.emit('pergunta', game.addPergunta(questions.perguntas[numberPergunta]))
+      io.emit('add-sugar', game.addSugarRandom("a"));
+      io.emit('add-sugar', game.addSugarRandom("b"));
 
-    //criar perguntas randons
-    io.emit('pergunta', game.addPergunta(questions.perguntas[numberPergunta]))
-    io.emit('add-sugar', game.addSugarRandom("a"));
-    io.emit('add-sugar', game.addSugarRandom("b"));
-
-    //  ? Emit new player
+    //  ? Emit new player 
     socket.broadcast.emit('new-player', { player: game.gamePlayers[socket.id]});
   });
 
@@ -54,22 +54,36 @@ io.on("connection", (socket)=> {
     socket.broadcast.emit('player-update', { id: id, playerMoved: moved });
   });
 
-  socket.on('player-collision', ({idPlayer, idSugar})=>{
+  socket.on('player-collision', ({idPlayer, idSugar, tag})=>{
     console.log(`Player colided ${idPlayer} with ${idSugar}`);
     
-    game.updateScorePlayer(idPlayer);
-    //numberPergunta = numberPergunta < questions.perguntas.length ? numberPergunta++ : 0; 
-    game.removeSugar(idSugar);
 
-    socket.emit('player-colided', { colidedIdPlayer: idPlayer, colidedIdSugar: idSugar});
-    socket.broadcast.emit('player-colided', { colidedIdPlayer: idPlayer, colidedIdSugar: idSugar, type: 'broadcast' });
+    if(questions.perguntas[numberPergunta].resposta == tag){
+      game.updateScorePlayer(idPlayer);
+      game.removeAlternativas();
 
+      socket.emit('player-colided', { colidedIdPlayer: idPlayer, colidedIdSugar: idSugar, tag: tag});
+      socket.broadcast.emit('player-colided', { colidedIdPlayer: idPlayer, colidedIdSugar: idSugar, tag: tag, type: 'broadcast' });
+
+      if(numberPergunta < questions.perguntas.length) 
+        numberPergunta++ 
+      else 
+        numberPergunta = 0; 
+      
+      io.emit('pergunta', game.addPergunta(questions.perguntas[numberPergunta]))
+      io.emit('add-sugar', game.addSugarRandom("a"));
+      io.emit('add-sugar', game.addSugarRandom("b"));
+
+    }else{
+      socket.emit('player-colided', { colidedIdPlayer: idPlayer, colidedIdSugar: idSugar, tag: tag});
+      socket.broadcast.emit('player-colided', { colidedIdPlayer: idPlayer, colidedIdSugar: idSugar, tag: tag, type: 'broadcast' });
+    }
   });
 
 
   //  ? PERGUNTA(s)
   socket.on('removed-sugar', (idSugar)=>{
-    game.removeSugar(idSugar);
+    game.removeAlternativas();
   });
 
 

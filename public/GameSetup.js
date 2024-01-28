@@ -4,6 +4,7 @@ function GameSetup(canvasId) { // create and loop in gmae
 
     let gamePlayers = {};
     let gameSugars = [];
+    let perguntaAtual = {}
 
     let oldTimeStamp = 0;
 
@@ -14,7 +15,7 @@ function GameSetup(canvasId) { // create and loop in gmae
         
         canvas = document.getElementById(canvasId);
         context = canvas.getContext('2d');
-        
+
         addPlayers(getGame.player);
         addSugars(getGame.sugar);
         
@@ -109,11 +110,12 @@ function GameSetup(canvasId) { // create and loop in gmae
                     player.posY < sugar.y + sugar.height &&
                     player.posY + player.height > sugar.y) {
                         
-                    console.log(`COLIDED sugar: ${ sugar.id } and player ${ player.id }`);
+                    console.log(`COLIDED alternativa: ${ sugar.id } and player ${ player.id }`);
                     return colided = {
                         collision: true,
                         idSugar: sugar.id,
-                        idPlayer: getIdPlayer
+                        idPlayer: getIdPlayer,
+                        tag: sugar.tag
                     }
                 }
             });
@@ -121,15 +123,22 @@ function GameSetup(canvasId) { // create and loop in gmae
         return colided;
     }
 
-    function playerColided({colidedIdPlayer, colidedIdSugar}){
-        console.log(`COLISAO`);
-
+    function playerColided({colidedIdPlayer, colidedIdSugar, tag}){
         let acerto = document.getElementById('acerto');
+        let error = document.getElementById('erro')
 
-        gamePlayers[colidedIdPlayer].score += 1;
-        acerto.style.display='block'
-        removeSugar(colidedIdSugar);
-        setTimeout(()=>{acerto.style.display="none"},1000)
+        if(tag == perguntaAtual.resposta){
+            gamePlayers[colidedIdPlayer].score += 1;
+
+            error.style.display='none'
+            acerto.style.display='block'
+
+            removeAlternativas();
+            setTimeout(()=>{acerto.style.display="none"},500)
+        }else{
+            acerto.style.display='none'
+            error.style.display = 'block'
+        }
     }
 
     function playersScore() {
@@ -139,7 +148,7 @@ function GameSetup(canvasId) { // create and loop in gmae
 
         points.innerHTML = `
             <tr>
-                <th>Alunoos</th>
+                <th>Alunos</th>
                 <th>Pontos</th>
             </tr>
         `
@@ -171,14 +180,16 @@ function GameSetup(canvasId) { // create and loop in gmae
 
         console.log(`Pergunta ALL:`, perguntaPlayer);
 
-        pergunta.innerText += perguntaPlayer.pergunta
-        letraA.innerText += perguntaPlayer.letraA
-        letraB.innerText += perguntaPlayer.letraB
+        pergunta.innerText = perguntaPlayer.pergunta
+        letraA.innerText = perguntaPlayer.letraA
+        letraB.innerText = perguntaPlayer.letraB
+        
+        perguntaAtual = perguntaPlayer
 
     }
 
     function addSugar(sugar) {
-        console.log(`QTD SUGAR: ${gameSugars.length} `);
+        console.log(`QTD alternativa: ${gameSugars.length} `);
         
         if(sugar.id && gameSugars.length <= 2){
             gameSugars.push(new Sugar(sugar, canvasId))
@@ -189,6 +200,8 @@ function GameSetup(canvasId) { // create and loop in gmae
         if(objectsSugars){
             for (const idSugar in objectsSugars) {
                 const sugar = objectsSugars[idSugar]
+                console.log(sugar);
+
                 gameSugars.push(new Sugar(sugar, canvasId));
             }
         }
@@ -196,10 +209,16 @@ function GameSetup(canvasId) { // create and loop in gmae
 
     function removeSugar(idSugar) {
         if (idSugar) {
-            console.log(`SUGAR REMOVED: ${idSugar}`);
+            console.log(`ALTERNATIVA REMOVED: ${idSugar}`);
             
             let find = gameSugars.findIndex(element => element.id === idSugar)
             gameSugars.splice(find, 1);
+        }
+    }
+
+    function removeAlternativas() {
+        while(gameSugars.length) {
+            gameSugars.pop();
         }
     }
     
@@ -222,6 +241,7 @@ function GameSetup(canvasId) { // create and loop in gmae
         addSugar,
         addPergunta,
         addSugars,
+        removeAlternativas,
         removeSugar,
         clearCanvas
 
