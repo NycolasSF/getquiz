@@ -8,6 +8,7 @@
         <script src="/socket.io/socket.io.js"></script>
     </head>
     <body>
+        
         <div id="start" class="container-start">
             <h2>getQuiz</h2>
             <form>
@@ -16,9 +17,9 @@
             </form>
         </div>
         <section id="game" class="container-game">
+          
             <h2>getQuiz</h2>
             <div class="container-pergunta">
-                
                 <p style="margin-bottom: 10px;"><span class="titlePergunta">Pergunta: </span><span id="pergunta"></span> </p>
 
                 <p> <span class="letraA">(A)</span>  <span id="letraA"></span></p>
@@ -32,9 +33,27 @@
                 </canvas>
                 <div class="table">
                     <table id="points" class="table-points"></table>
+                    <div class="container-jogar">
+                        <h3>Como Jogar</h3>
+                        <ul>
+                            <li>Com base nas perguntas que forem aparecendo, fique na direção das alternativas que estão caindo, conforme jogue correto.</li>
+                            <li>Quando estiver jogando com mais pessoas, o jogador que pegar a resposta primeiro irá acreditar nos pontos. </li>
+                            <li>Quando estiver jogando sozinho, terá todo o tempo para poder pensar em qual alternativa é a correta.</li>
+                        </ul>
+                     <img src="./assets/movimento.png" alt="">
+
+                    </div>
                 </div>
+                
             </div>
         </section>
+        <footer>
+            <p style="text-align: center;font-size: 10px;">Estamos em servidor gratuito em casos de bug, por favor recarregue a página.</p>
+        </footer>
+        <audio id="playAudio"  autoplay autostart="0" autostart="false" preload ="none" name="media"  >
+            <source src="./assets/trilha.mp3" type="audio/mpeg" >
+          Your browser does not support the audio element.
+          </audio>
     </body>
     <!-- <div>© <a href='https://www.123rf.com/profile_captainvector'>captainvector</a>, <a href='https://www.123rf.com/free-images/'>123RF Free Images</a></div> -->
     <script src="./GameObjects.js"></script>
@@ -45,6 +64,7 @@
         const game = GameSetup('screenRender');
 
         function emitStartGame(){
+            let playAudio = document.getElementById('playAudio')
             let playerName = document.getElementById('apelido').value != '' ? 
             document.getElementById('apelido').value : alert('Digite seu nome');
             
@@ -52,6 +72,7 @@
                 return socket.emit('start-game', playerName);
             }
             
+            playAudio.play()
         }
 
         socket.on('add-player', ({getGame, idPlayer})=>{
