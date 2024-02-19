@@ -34,16 +34,17 @@ io.on("connection", (socket)=> {
         sugar: game.gameSugars,
         pergunta: game.gamePerguntas
       }, 
-      idPlayer: socket.id
+      idPlayer: socket.id,
     });  
 
     // ? PERGUNTAS
+
       io.emit('pergunta', game.addPergunta(questions.perguntas[numberPergunta]))
       io.emit('add-sugar', game.addSugarRandom("a"));
       io.emit('add-sugar', game.addSugarRandom("b"));
 
     //  ? Emit new player 
-    socket.broadcast.emit('new-player', { player: game.gamePlayers[socket.id]});
+    socket.broadcast.emit('new-player', { player: game.gamePlayers[socket.id] });
   });
 
   // ? PLAYER(s)
@@ -55,7 +56,7 @@ io.on("connection", (socket)=> {
   });
 
   socket.on('player-collision', ({idPlayer, idSugar, tag})=>{
-    console.log(`Player colided ${idPlayer} with ${idSugar}`);
+    console.log(`COLISAO: ${idPlayer} com ${tag}`);
     
 
     if(questions.perguntas[numberPergunta].resposta == tag){

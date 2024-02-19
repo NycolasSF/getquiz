@@ -9,6 +9,7 @@ function GameSetup(canvasId) { // create and loop in gmae
     let oldTimeStamp = 0;
 
     let idPlayer = undefined;
+    let pause = false
 
     function start(getGame) {
         console.info(">> Start game");
@@ -19,13 +20,12 @@ function GameSetup(canvasId) { // create and loop in gmae
         addPlayers(getGame.player);
         addSugars(getGame.sugar);
         
-        
         console.info(">> Start gameLoop");    
         return window.requestAnimationFrame((timeStamp) => { gameLoop(timeStamp) });
     }
 
     function gameLoop(timeStamp) {
-
+        
         let time = (timeStamp - oldTimeStamp) / 1000;
         oldTimeStamp = timeStamp;
 
@@ -37,15 +37,17 @@ function GameSetup(canvasId) { // create and loop in gmae
             const player = gamePlayers[idPlayer]; 
             player.draw();
         }
-       
             
         gameSugars.forEach((sugar) => {
             sugar.update(time);
             sugar.draw(sugar.tag);
         });
 
-        window.requestAnimationFrame((timeStamp) => gameLoop(timeStamp));
-    }
+        if(!pause)
+            window.requestAnimationFrame((timeStamp) => gameLoop(timeStamp));
+        else 
+            window.cancelAnimationFrame((timeStamp) => gameLoop(timeStamp))
+    }   
 
     // ? OBJ --> PLAYERS
     function setPlayer(getIdPlayer) {
@@ -110,7 +112,7 @@ function GameSetup(canvasId) { // create and loop in gmae
                     player.posY < sugar.y + sugar.height &&
                     player.posY + player.height > sugar.y) {
                         
-                    console.log(`COLIDED alternativa: ${ sugar.id } and player ${ player.id }`);
+                    console.log(`COLISAO: ${ sugar.tag } and player ${ player.name }`);
                     return colided = {
                         collision: true,
                         idSugar: sugar.id,
@@ -191,7 +193,9 @@ function GameSetup(canvasId) { // create and loop in gmae
     function addSugar(sugar) {
         console.log(`QTD alternativa: ${gameSugars.length} `);
         
-        if(sugar.id && gameSugars.length <= 2){
+        if(sugar.id && gameSugars.length >= 2){
+            removeAlternativas()
+        }else{
             gameSugars.push(new Sugar(sugar, canvasId))
         }
     }

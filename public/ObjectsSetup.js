@@ -34,7 +34,7 @@ class Player extends PlayerObject{
     }
 
     screenInfinite(x, y) {
-        return ((y % x) + x) % x
+        return ((y % x) + x) % x - 20
     }
 
 }
@@ -60,7 +60,7 @@ class Sugar extends SugarObject {
     }
 
     screenInfinite(x, y) {
-        return ((y % x) + x) % x
+        return ((y % x) + x) % x -20
     }
 
     update(time) {

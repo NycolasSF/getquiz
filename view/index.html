@@ -8,7 +8,6 @@
         <script src="/socket.io/socket.io.js"></script>
     </head>
     <body>
-        
         <div id="start" class="container-start">
             <h2>getQuiz</h2>
             <form>
@@ -67,12 +66,13 @@
             let playAudio = document.getElementById('playAudio')
             let playerName = document.getElementById('apelido').value != '' ? 
             document.getElementById('apelido').value : alert('Digite seu nome');
-            
+        
             if(playerName != undefined){
                 return socket.emit('start-game', playerName);
             }
-            
+        
             playAudio.play()
+
         }
 
         socket.on('add-player', ({getGame, idPlayer})=>{
@@ -84,8 +84,9 @@
             setInterval(() => {
                 let detectCollision = game.playerCheckCollision(idPlayer);
                 if (detectCollision.collision) return socket.emit('player-collision', detectCollision);
-            }, 100);
+            }, 1000);
 
+            document.getElementById('screenRender').style.animationName = 'fadeOUT'
             document.getElementById('start').style.display = 'none'; 
             document.getElementById('game').style.display = 'block'; 
         
